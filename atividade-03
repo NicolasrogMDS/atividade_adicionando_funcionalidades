@@ -5,8 +5,34 @@ def logoSenai():
     os.system("cls || clear")
     print("=== SENAI === ")
 
+def calcular_imc(a, b):
+    lista_resultados_imc = []
+    for peso in a:
+        for altura in b:
+            imc = peso / (altura ** 2)
+            lista_resultados_imc.append(imc)
+    return lista_resultados_imc
+
+def interpretar_resultados_imc(a):
+    lista_resultados_interpretacao_imc = []  
+    for imc in a:
+        if imc < 18.5:
+            lista_resultados_interpretacao_imc.append("Abaixo do peso")
+        elif imc < 25:
+            lista_resultados_interpretacao_imc.append("Peso normal")
+        elif imc < 30:
+            lista_resultados_interpretacao_imc.append("Sobrepeso")
+        elif imc < 35:
+            lista_resultados_interpretacao_imc.append("Obesidade grau I")
+        elif imc < 40:
+            lista_resultados_interpretacao_imc.append("Obesidade grau II")
+        elif imc >= 40:
+            lista_resultados_interpretacao_imc.append("Obesidade grau III (mórbida)")
+    return lista_resultados_interpretacao_imc
+    
 # Definindo listas vazias para armazenar os dados dos usuários
 nomes = []
+sobrenomes = []
 idades = []
 alturas = []
 pesos = []
@@ -20,23 +46,29 @@ while True:
     if nome.lower() == 'sair':
         break
     
+    sobrenome = input("Digite o sobrenome do usuário: ")
     idade = int(input("Digite a idade do usuário: "))
     altura = float(input("Digite a altura do usuário (em metros): "))
     peso = float(input("Digite o peso do usuário (em quilogramas): "))
     
     # Adicionando os dados às listas
     nomes.append(nome)
+    sobrenomes.append(sobrenome)
     idades.append(idade)
     alturas.append(altura)
     pesos.append(peso)
+
+lista_resultados_imc = calcular_imc(pesos, alturas)
+lista_resultados_interpretacao_imc = interpretar_resultados_imc(lista_resultados_imc)
 
 # Exibindo os dados armazenados
 logoSenai()
 print("\nDados dos usuários:")
 for i in range(len(nomes)):
-    print(f"Usuário {i+1}:")
-    print("Nome:", nomes[i])
+    print(f"\nUsuário {i+1}:")
+    print("Nome completo:", nomes[i], sobrenomes[i])
     print("Idade:", idades[i])
     print("Altura:", alturas[i], "metros")
     print("Peso:", pesos[i], "quilogramas")
-    print()
+    print("IMC:", round(lista_resultados_imc[i],2))
+    print("Interpretação do IMC:", lista_resultados_interpretacao_imc[i])
